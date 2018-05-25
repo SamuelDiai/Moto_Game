@@ -1,46 +1,29 @@
-#include "terrain.h"
+#ifndef TERRAIN_H
+#define TERRAIN_H
+#include <iostream>
+#include <Imagine/Graphics.h>
+using namespace Imagine;
+#include "voiture.h"
 
-terrain::terrain()
-{
-int p(fonction(0));
-image.push_back(p);
-}
+#define USE_MATH_DEFINES
+#include "math.h"
 
-void terrain::afficher()
-{
-    noRefreshBegin();
-    clearWindow();
-    for (int i=0;i<image.size();i++)
-    {
-        fillRect(i,image[i],1,1,RED);
-    }
-    noRefreshEnd();
-}
 
-void terrain::pop_front()
+float distance(FVector<float,2> a ,FVector<float,2> b);
+class terrain
 {
-    image.erase(image.begin());
-}
+    std::vector<int> image;
 
-void terrain::defiler(int p)
-{
-    if (image.size()==largeur)
-    {
-        image.push_back(p);
-        pop_front();
-    }
-    else
-    {
-        image.push_back(p);
-    }
-}
+public:
+    terrain();
+    int f(int i);
+    void afficher(int posb);
+    void pop_front();
+    void defiler(int p);
+    bool contact(Balle b);
+    bool contact_air(Balle b);
 
-int fonction(int x)
-{
-    return hauteur/2+ cos(2*x*M_PI/largeur)*hauteur/8 + sin(3*x*M_PI/largeur)*hauteur/20;
-}
+};
 
-int terrain::f(int i)
-{
-    return image[i];
-}
+int fonction(int x);
+#endif // TERRAIN_H
