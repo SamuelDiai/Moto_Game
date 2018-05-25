@@ -1,19 +1,34 @@
 #include "terrain.h"
 
+int pasdaff=5;
+
 int main()
 {
+
     srand((unsigned int)time(0));
     terrain t;
+    Balle b;
+    Balle vieille_balle = b;
     openWindow(largeur,hauteur);
-    int x=0;
-    while(true)
+    t.afficher(b.getpos().x());
+
+    for (int T;T<pasdaff*100000;T++)
     {
-        int p=fonction(x);
-        x+=1;
-        t.defiler(p);
-        std::cout <<t.f(399)<<"  "<< fonction(x)<<std::endl;
-        t.afficher();
-        milliSleep(10);
+        if ((T%pasdaff)==0)
+        {
+        noRefreshBegin();
+        vieille_balle.effacer_balle();
+
+        t.afficher(b.getpos().x());
+        vieille_balle=b;
+        b.afficher_balle();
+        vieille_balle.afficher_balle();
+        noRefreshEnd();
+        milliSleep(50);
+        }
+        if (!t.contact_air(b))
+            b.update_air();
+
     }
     return 0;
 }
