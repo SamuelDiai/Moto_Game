@@ -3,12 +3,13 @@
 #include <iostream>
 #include <Imagine/Graphics.h>
 using namespace Imagine;
-#include <queue>
+#include "voiture.h"
+
 #define USE_MATH_DEFINES
 #include "math.h"
 
-const int hauteur=400;
-const int largeur=400;
+
+float distance(FVector<float,2> a ,FVector<float,2> b);
 class terrain
 {
     std::vector<int> image;
@@ -16,9 +17,12 @@ class terrain
 public:
     terrain();
     int f(int i);
-    void afficher();
+    void afficher(int posb);
     void pop_front();
     void defiler(int p);
+    bool contact(Balle b);
+    bool contact_air(Balle b);
+
 };
 
 int fonction(int x);
