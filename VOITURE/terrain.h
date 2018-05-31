@@ -22,8 +22,10 @@ public:
     void defiler(int p);
     bool contact(Balle b);
     bool contact_air(Balle b);
+    bool contact_supp(Balle b);
 
 };
 
-int fonction(int x);
+float fonction(int x);
+int Clavier() ;
 #endif // TERRAIN_H

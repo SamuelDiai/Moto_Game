@@ -18,10 +18,10 @@ void terrain::afficher(int posb)
 {
 
     clearWindow();
-    for (int i=posb-largeur/3;i<posb-largeur/3+image.size();i++)
+    for (int i=posb-largeur/3;i<posb-largeur/3+image.size()/6;i++)
     {
 
-        fillRect(-posb+largeur/3+i,image[i],1,1,RED);
+        fillRect(-posb+largeur/3+i,hauteur/3+image[i%image.size()],1,1,RED);
     }
 
 }
@@ -47,10 +47,18 @@ void terrain::defiler(int p)
 
 bool terrain::contact(Balle b)
 {
-    int abs = b.getpos().x();
+
+    int abs = b.getpos().x()+dt*b.getvitx();
     FVector<float,2> poscourbe(abs,fonction(abs));
-    FVector<float,2> posballe(b.getpos());
+    FVector<float,2> deplacement(dt*b.getvitx(),dt*b.getvity());
+    FVector<float,2> posballe(b.getpos()+deplacement);
     return distance(poscourbe,posballe)< b.r;
+}
+
+
+bool terrain::contact_supp(Balle b)
+{
+    return b.getpos().y()+dt*b.getvity()+largeur/3<=b.r;
 }
 
 bool terrain::contact_air(Balle b)
@@ -73,12 +81,31 @@ bool terrain::contact_air(Balle b)
 
 }
 
-int fonction(int x)
+float fonction(int x)
 {
     return hauteur/2+ cos(2*x*M_PI/largeur)*hauteur/8 + sin(3*x*M_PI/largeur)*hauteur/20;
 }
 
+
+
 int terrain::f(int i)
 {
     return image[i];
+}
+
+
+
+int Clavier()
+{
+    Event e;
+    do {
+        getEvent(0,e);
+        if (e.type==EVT_KEY_ON)
+        {
+            std::cout << e.key << std::endl;
+            return e.key;
+
+        }
+    } while (e.type!=EVT_NONE);
+    return 0;
 }
