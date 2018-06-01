@@ -10,7 +10,7 @@ void Balle::afficher_balle()
 
 void Balle::effacer_balle()
 {
-    fillCircle(largeur/3,pos.y(),r,WHITE);
+    fillCircle(largeur/3,hauteur/3+pos.y(),r,WHITE);
 }
 
 void Balle::addition(FVector<float,2> vec)
@@ -31,7 +31,6 @@ void Balle::update_air()
 
    vitesse+= dt*gravity;
    pos+= dt*vitesse;
-
 }
 
 FVector<float, 2> Balle::getpos()
@@ -83,6 +82,11 @@ void Balle::rebond_supp()
     vitesse.y()=-vity;
 }
 
+void Balle::rebond_gauche()
+{
+    float vitx=vitesse.x();
+    vitesse.x()=-vitx;
+}
 float df(int x)
 {
     return -2*M_PI*hauteur*sin(2*x*M_PI/largeur)/(8*largeur)+3*M_PI*hauteur*cos(3*x*M_PI/largeur)/(20*largeur);

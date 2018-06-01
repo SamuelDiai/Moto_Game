@@ -23,6 +23,7 @@ public:
     bool contact(Balle b);
     bool contact_air(Balle b);
     bool contact_supp(Balle b);
+    bool contact_gauche(Balle b);
 
 };
 

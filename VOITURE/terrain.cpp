@@ -21,7 +21,7 @@ void terrain::afficher(int posb)
     for (int i=posb-largeur/3;i<posb-largeur/3+image.size()/6;i++)
     {
 
-        fillRect(-posb+largeur/3+i,hauteur/3+image[i%image.size()],1,1,RED);
+        fillRect(-posb+largeur/3+i,hauteur/3+image[i%image.size()],1,largeur,RED);
     }
 
 }
@@ -49,16 +49,23 @@ bool terrain::contact(Balle b)
 {
 
     int abs = b.getpos().x()+dt*b.getvitx();
+    int haut= b.getpos().y()+dt*b.getvity();
     FVector<float,2> poscourbe(abs,fonction(abs));
     FVector<float,2> deplacement(dt*b.getvitx(),dt*b.getvity());
     FVector<float,2> posballe(b.getpos()+deplacement);
-    return distance(poscourbe,posballe)< b.r;
+    return (distance(poscourbe,posballe)< b.r && haut < fonction(abs)+b.r);
 }
 
 
 bool terrain::contact_supp(Balle b)
 {
-    return b.getpos().y()+dt*b.getvity()+largeur/3<=b.r;
+    return b.getpos().y()+dt*b.getvity()+hauteur/3<=b.r;
+}
+
+
+bool terrain::contact_gauche(Balle b)
+{
+    return b.getpos().x()+dt*b.getvitx()<=largeur/3;
 }
 
 bool terrain::contact_air(Balle b)

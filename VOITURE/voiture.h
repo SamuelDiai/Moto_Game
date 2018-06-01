@@ -24,6 +24,7 @@ int getvitx();
 int getvity();
 void rebond(int x);
 void rebond_supp();
+void rebond_gauche();
 void update_bas();
 void update_gauche();
 void update_droite();
