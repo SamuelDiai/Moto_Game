@@ -3,16 +3,18 @@
 
 #include <string>
 int pasdaff=5;
-
-#include <Imagine/Graphics.h>
 #include <Imagine/Images.h>
 using namespace Imagine;
+#include <Imagine/Graphics.h>
+
 
 int main()
 {
+
     Image<Color> gameover; // Chargement de l'image "Gameover"
     load(gameover,srcPath("gameover.png"));
-
+    Image<Color> fond;
+    load(fond,srcPath("fond.png"));
     int compt=0; //Initialisation d'un Compteur qui nous
                 //permet de voir combien de fois la balle reste immobile
 
@@ -20,7 +22,8 @@ int main()
     terrain t;
     Balle b;
     openWindow(largeur,1.5*hauteur);
-    t.afficher(b.getpos().x());
+    click();
+    t.afficher(b.getpos().x(),fond);
     double timer0=double(clock())/CLOCKS_PER_SEC;
     int score = int(b.getpos().x());
 
@@ -37,7 +40,7 @@ int main()
             // Affichage des objets
             noRefreshBegin();
             b.effacer_balle();
-            t.afficher(b.getpos().x());
+            t.afficher(b.getpos().x(),fond);
             b.afficher_balle();
 
             // Affichage des scores , temps , distance actuelle
@@ -45,8 +48,8 @@ int main()
             drawString(largeur-50,20,std::to_string(b.getpos().x()),GREEN,15);
             drawString(10,20,"TEMPS :",MAGENTA,15);
             drawString(80,20,std::to_string(timer),MAGENTA,15);
-            drawString(150,50,"SCORE :",BLUE,15);
-            drawString(230,50,std::to_string(score),BLUE,15);
+            drawString(150,50,"SCORE :",YELLOW,15);
+            drawString(230,50,std::to_string(score),YELLOW,15);
             //Attente
             noRefreshEnd();
             milliSleep(50);
@@ -91,10 +94,11 @@ int main()
             else   // Sinon on incrémente la valeur du compteur
                 compt+=1;
         }
-        if (compt >=120) // Si le compteur est trop grand ou qu'on dépasse 30sec on stoppe l'algorithme
+        if (compt >=120 || timer>=15 || b.getpos().y()>=hauteur) // Si le compteur est trop grand ou qu'on dépasse 30sec on stoppe l'algorithme
             break;
     }
     clearWindow(); // On affiche "Game Over"
+    fillRect(0,0,largeur,1.5*hauteur,BLACK);
     drawString(150,50,"SCORE :",BLUE,20);
     drawString(230,50,std::to_string(score),BLUE,20);
     display(gameover,largeur/2-120,hauteur/2);

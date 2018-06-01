@@ -26,8 +26,6 @@ void rebond(int x);
 void rebond_supp();
 void rebond_gauche();
 void update_bas();
-void update_gauche();
-void update_droite();
 };
 float df(int x);
 float prod(FVector<float, 2> a,FVector<float, 2>b);

@@ -20,7 +20,7 @@ void Balle::addition(FVector<float,2> vec)
 
 Balle::Balle()
 {
-    FVector<float,2> p(largeur/3,2*r);
+    FVector<float,2> p(largeur/3,-50);
     FVector<float,2> vit(1.5,0);
     pos=p;
     vitesse=vit;
@@ -56,15 +56,7 @@ void Balle::update_bas()
     vitesse.y()+=0.5;
 }
 
-void Balle::update_gauche()
-{
-    pos.x()-=10;
-}
 
-void Balle::update_droite()
-{
-    pos.x()+=10;
-}
 void Balle::rebond(int x)
 {
     FVector<float, 2> ex(1,0);
@@ -72,7 +64,8 @@ void Balle::rebond(int x)
     float a = df(x);
     FVector<float, 2> normal(-a,1);
     FVector<float,2> tangent(1,a);
-    FVector<float,2> vit_(0.65*prod(prod(vitesse,tangent)*tangent-prod(vitesse,normal)*normal,ex),0.65*prod(prod(vitesse,tangent)*tangent-prod(vitesse,normal)*normal,ey));
+    FVector<float,2> vit_(0.65*prod(prod(vitesse,tangent)*tangent-prod(vitesse,normal)*normal,ex),
+                          0.65*prod(prod(vitesse,tangent)*tangent-prod(vitesse,normal)*normal,ey));
     vitesse=vit_;
 
 }

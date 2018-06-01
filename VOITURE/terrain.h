@@ -1,12 +1,13 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 #include <iostream>
-#include <Imagine/Graphics.h>
+#include <Imagine/Images.h>
 using namespace Imagine;
 #include "voiture.h"
 
 #define USE_MATH_DEFINES
 #include "math.h"
+
 
 
 float distance(FVector<float,2> a ,FVector<float,2> b);
@@ -17,7 +18,7 @@ class terrain
 public:
     terrain();
     int f(int i);
-    void afficher(int posb);
+    void afficher(int posb, Image<Color> fond);
     void pop_front();
     void defiler(int p);
     bool contact(Balle b);
